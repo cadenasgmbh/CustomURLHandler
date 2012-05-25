@@ -1,0 +1,18 @@
+
+include:
+#include <s3eTypes.h>
+
+///! Callback type
+typedef int32 (*CustomURLHandlerCallback) (void* systemData, void* userData);
+
+functions:
+
+/**
+ * Register a callback for to handle url.
+ * 
+ * @param fn callback function.
+ * @param userData Value to pass to the @e userdata parameter of @e NotifyFunc.
+ * @par Required Header Files
+ * CustomURLHandler.h
+ */
+void CustomURLHandlerRegister(CustomURLHandlerCallback fn, void* userData) S3E_RESULT_ERROR
