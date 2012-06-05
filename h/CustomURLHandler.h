@@ -41,6 +41,7 @@ void CustomURLHandlerRegister(CustomURLHandlerCallback fn);
 /**
  * Get the url.
  * 
+ * @return the URL or NULL
  * @par Required Header Files
  * CustomURLHandler.h
  */

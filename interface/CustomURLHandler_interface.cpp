@@ -80,7 +80,7 @@ const char* CustomURLHandlerGetURL()
     IwTrace(CUSTOMURLHANDLER_VERBOSE, ("calling CustomURLHandler[1] func: CustomURLHandlerGetURL"));
 
     if (!_extLoad())
-        return S3E_RESULT_ERROR;
+        return NULL;
 
     return g_Ext.m_CustomURLHandlerGetURL();
 }

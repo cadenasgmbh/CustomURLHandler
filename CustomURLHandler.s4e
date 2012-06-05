@@ -14,12 +14,13 @@ functions:
  * @par Required Header Files
  * CustomURLHandler.h
  */
-void CustomURLHandlerRegister(CustomURLHandlerCallback fn) S3E_RESULT_ERROR
+void CustomURLHandlerRegister(CustomURLHandlerCallback fn)
 
 /**
  * Get the url.
  * 
+ * @return the URL or NULL
  * @par Required Header Files
  * CustomURLHandler.h
  */
-const char* CustomURLHandlerGetURL() S3E_RESULT_ERROR
+const char* CustomURLHandlerGetURL() NULL

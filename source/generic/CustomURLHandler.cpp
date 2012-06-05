@@ -30,5 +30,5 @@ void CustomURLHandlerRegister(CustomURLHandlerCallback fn)
 
 const char* CustomURLHandlerGetURL()
 {
-  CustomURLHandlerGetURL_platform();
+    return CustomURLHandlerGetURL_platform();
 }

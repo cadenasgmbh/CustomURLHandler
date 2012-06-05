@@ -7,6 +7,7 @@
  * be overwritten (unless --force is specified) and is intended to be modified.
  */
 #include "CustomURLHandler_internal.h"
+#include "s3eEdk_iphone.h"
 
 s3eResult CustomURLHandlerInit_platform()
 {
@@ -22,3 +23,10 @@ void CustomURLHandlerTerminate_platform()
 void CustomURLHandlerRegister_platform(CustomURLHandlerCallback fn)
 {
 }
+
+
+const char* CustomURLHandlerGetURL_platform()
+{
+    return s3eEdkAppGetInitialOpenURL();
+}
+
