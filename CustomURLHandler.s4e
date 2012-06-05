@@ -3,7 +3,7 @@ include:
 #include <s3eTypes.h>
 
 ///! Callback type
-typedef int32 (*CustomURLHandlerCallback) (void* systemData, void* userData);
+typedef int32 (*CustomURLHandlerCallback) (const char* url);
 
 functions:
 
@@ -11,8 +11,15 @@ functions:
  * Register a callback for to handle url.
  * 
  * @param fn callback function.
- * @param userData Value to pass to the @e userdata parameter of @e NotifyFunc.
  * @par Required Header Files
  * CustomURLHandler.h
  */
-void CustomURLHandlerRegister(CustomURLHandlerCallback fn, void* userData) S3E_RESULT_ERROR
+void CustomURLHandlerRegister(CustomURLHandlerCallback fn) S3E_RESULT_ERROR
+
+/**
+ * Get the url.
+ * 
+ * @par Required Header Files
+ * CustomURLHandler.h
+ */
+const char* CustomURLHandlerGetURL() S3E_RESULT_ERROR

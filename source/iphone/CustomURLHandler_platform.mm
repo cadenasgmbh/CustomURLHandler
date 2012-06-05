@@ -19,6 +19,6 @@ void CustomURLHandlerTerminate_platform()
     // Add any platform-specific termination code here
 }
 
-void CustomURLHandlerRegister_platform(CustomURLHandlerCallback fn, void* userData)
+void CustomURLHandlerRegister_platform(CustomURLHandlerCallback fn)
 {
 }

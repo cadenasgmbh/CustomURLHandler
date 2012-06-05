@@ -23,7 +23,12 @@ void CustomURLHandlerTerminate()
     CustomURLHandlerTerminate_platform();
 }
 
-void CustomURLHandlerRegister(CustomURLHandlerCallback fn, void* userData)
+void CustomURLHandlerRegister(CustomURLHandlerCallback fn)
 {
-	CustomURLHandlerRegister_platform(fn, userData);
+	CustomURLHandlerRegister_platform(fn);
+}
+
+const char* CustomURLHandlerGetURL()
+{
+  CustomURLHandlerGetURL_platform();
 }

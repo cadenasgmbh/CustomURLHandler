@@ -11,7 +11,8 @@
 /**
  * Definitions for functions types passed to/from s3eExt interface
  */
-typedef       void(*CustomURLHandlerRegister_t)(CustomURLHandlerCallback fn, void* userData);
+typedef       void(*CustomURLHandlerRegister_t)(CustomURLHandlerCallback fn);
+typedef const char*(*CustomURLHandlerGetURL_t)();
 
 /**
  * struct that gets filled in by CustomURLHandlerRegister
@@ -19,6 +20,7 @@ typedef       void(*CustomURLHandlerRegister_t)(CustomURLHandlerCallback fn, voi
 typedef struct CustomURLHandlerFuncs
 {
     CustomURLHandlerRegister_t m_CustomURLHandlerRegister;
+    CustomURLHandlerGetURL_t m_CustomURLHandlerGetURL;
 } CustomURLHandlerFuncs;
 
 static CustomURLHandlerFuncs g_Ext;
@@ -63,12 +65,22 @@ s3eBool CustomURLHandlerAvailable()
     return g_GotExt ? S3E_TRUE : S3E_FALSE;
 }
 
-void CustomURLHandlerRegister(CustomURLHandlerCallback fn, void* userData)
+void CustomURLHandlerRegister(CustomURLHandlerCallback fn)
 {
     IwTrace(CUSTOMURLHANDLER_VERBOSE, ("calling CustomURLHandler[0] func: CustomURLHandlerRegister"));
 
     if (!_extLoad())
         return;
 
-    g_Ext.m_CustomURLHandlerRegister(fn, userData);
+    g_Ext.m_CustomURLHandlerRegister(fn);
+}
+
+const char* CustomURLHandlerGetURL()
+{
+    IwTrace(CUSTOMURLHANDLER_VERBOSE, ("calling CustomURLHandler[1] func: CustomURLHandlerGetURL"));
+
+    if (!_extLoad())
+        return S3E_RESULT_ERROR;
+
+    return g_Ext.m_CustomURLHandlerGetURL();
 }

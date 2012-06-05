@@ -13,8 +13,55 @@
 #include <jni.h>
 #include "IwDebug.h"
 
+
+static char* g_RetStr;
+static int g_RetStrLen = 16384;
+
 static jobject g_Obj;
 static jmethodID g_CustomURLHandlerRegister;
+static jmethodID g_CustomURLHandlerGetURL;
+
+struct JavaString
+{
+    jstring _Ref;
+
+    JavaString ( const char *Buffer )
+    {
+        JNIEnv *env = s3eEdkJNIGetEnv();
+        _Ref = env->NewStringUTF ( Buffer );
+    }
+
+    JavaString ( jstring Ref )
+    {
+        _Ref = Ref;
+    }
+
+    ~JavaString()
+    {
+        JNIEnv *env = s3eEdkJNIGetEnv();
+        env->DeleteLocalRef ( _Ref );
+    }
+
+    operator jstring()
+    {
+        return _Ref;
+    }
+};
+
+const char* getCString(jstring str)
+{
+    JNIEnv* env = s3eEdkJNIGetEnv();
+    if (!str)
+        return NULL;
+    jboolean free;
+    const char* res = env->GetStringUTFChars(str, &free);
+    g_RetStrLen = strlen(res);
+    s3eEdkReallocOS(g_RetStr, g_RetStrLen);
+    strncpy(g_RetStr, res, g_RetStrLen);
+    env->ReleaseStringUTFChars(str, res);
+    return g_RetStr;
+}
+
 
 s3eResult CustomURLHandlerInit_platform()
 {
@@ -41,6 +88,9 @@ s3eResult CustomURLHandlerInit_platform()
     // Get all the extension methods
     g_CustomURLHandlerRegister = env->GetMethodID(cls, "CustomURLHandlerRegister", "()V");
     if (!g_CustomURLHandlerRegister)
+        goto fail;
+    g_CustomURLHandlerGetURL = env->GetMethodID(cls, "CustomURLHandlerGetURL", "()V");
+    if (!g_CustomURLHandlerGetURL)
         goto fail;
 
 
@@ -70,8 +120,15 @@ void CustomURLHandlerTerminate_platform()
     // Add any platform-specific termination code here
 }
 
-void CustomURLHandlerRegister_platform(CustomURLHandlerCallback fn, void* userData)
+void CustomURLHandlerRegister_platform(CustomURLHandlerCallback fn)
 {
     JNIEnv* env = s3eEdkJNIGetEnv();
     env->CallVoidMethod(g_Obj, g_CustomURLHandlerRegister);
+}
+
+const char* CustomURLHandlerGetURL_platform()
+{
+    JNIEnv* env = s3eEdkJNIGetEnv();
+    JavaString str((jstring)env->CallObjectMethod(g_Obj, g_CustomURLHandlerGetURL));
+    return getCString((jstring)str);
 }

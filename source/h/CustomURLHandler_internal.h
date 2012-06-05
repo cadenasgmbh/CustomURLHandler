@@ -42,7 +42,8 @@ void CustomURLHandlerTerminate();
  * Platform-specific termination, implemented on each platform
  */
 void CustomURLHandlerTerminate_platform();
-void CustomURLHandlerRegister_platform(CustomURLHandlerCallback fn, void* userData);
+void CustomURLHandlerRegister_platform(CustomURLHandlerCallback fn);
+const char* CustomURLHandlerGetURL_platform();
 
 
 #endif /* !CUSTOMURLHANDLER_INTERNAL_H */

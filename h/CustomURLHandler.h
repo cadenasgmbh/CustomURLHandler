@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2001-2011 Ideaworks3D Ltd.
+ * Copyright (C) 2001-2012 Ideaworks3D Ltd.
  * All Rights Reserved.
  *
  * This document is protected by copyright, and contains information
@@ -19,7 +19,7 @@
 #include <s3eTypes.h>
 
 ///! Callback type
-typedef int32 (*CustomURLHandlerCallback) (void* systemData, void* userData);
+typedef int32 (*CustomURLHandlerCallback) (const char* url);
 // \cond HIDDEN_DEFINES
 S3E_BEGIN_C_DECL
 // \endcond
@@ -33,11 +33,18 @@ s3eBool CustomURLHandlerAvailable();
  * Register a callback for to handle url.
  * 
  * @param fn callback function.
- * @param userData Value to pass to the @e userdata parameter of @e NotifyFunc.
  * @par Required Header Files
  * CustomURLHandler.h
  */
-void CustomURLHandlerRegister(CustomURLHandlerCallback fn, void* userData);
+void CustomURLHandlerRegister(CustomURLHandlerCallback fn);
+
+/**
+ * Get the url.
+ * 
+ * @par Required Header Files
+ * CustomURLHandler.h
+ */
+const char* CustomURLHandlerGetURL();
 
 S3E_END_C_DECL
 

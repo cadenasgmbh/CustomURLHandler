@@ -17,4 +17,9 @@ class CustomURLHandler
     {
         
     }
+    
+    public String CustomURLHandlerGetURL()
+    {
+      return null;
+    }
 }
